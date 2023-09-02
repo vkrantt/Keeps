@@ -11,8 +11,9 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { BASE_URL, handleError } from "../config/config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NoteState } from "../context/NoteProvider";
+import Logo from "../components/Logo";
 
 const Signup = () => {
   const { setUser } = NoteState();
@@ -65,6 +66,10 @@ const Signup = () => {
     <Container>
       <Row>
         <Col lg="5" className="m-auto mt-5">
+          <div className="mb-3">
+            <Logo />
+          </div>
+
           {isError && <Alert variant="danger">{errorMessage}</Alert>}
           <Form>
             <Form.Group className="mb-3">
@@ -74,6 +79,7 @@ const Signup = () => {
                 placeholder="Enter your full name"
                 name="name"
                 onChange={handleChange}
+                className="p-3 shadow-none border-2 fs-5"
                 value={credentials.name}
               />
             </Form.Group>
@@ -85,6 +91,7 @@ const Signup = () => {
                 placeholder="Enter username"
                 name="username"
                 onChange={handleChange}
+                className="p-3 shadow-none border-2 fs-5"
                 value={credentials.username}
               />
             </Form.Group>
@@ -96,14 +103,24 @@ const Signup = () => {
                 placeholder="Password"
                 name="password"
                 onChange={handleChange}
+                className="p-3 shadow-none border-2 fs-5"
                 value={credentials.password}
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
-              {isLoading ? <Spinner size="sm" /> : "Signup"}
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={handleSubmit}
+              disabled={isLoading}
+              className="w-100 p-3 fs-5"
+            >
+              {isLoading ? <Spinner size="sm" /> : "Sign Up"}
             </Button>
           </Form>
+          <div className="d-flex mt-3 ">
+            <Link to="/login">Already have an account?</Link>
+          </div>
         </Col>
       </Row>
     </Container>

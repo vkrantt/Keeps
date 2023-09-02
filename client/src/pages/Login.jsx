@@ -10,9 +10,10 @@ import {
 } from "react-bootstrap";
 import { useState } from "react";
 import { NoteState } from "../context/NoteProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL, handleError } from "../config/config";
 import axios from "axios";
+import Logo from "../components/Logo";
 
 const Login = () => {
   const { setUser } = NoteState();
@@ -67,6 +68,9 @@ const Login = () => {
     <Container>
       <Row>
         <Col lg="5" className="m-auto mt-5">
+          <div className="mb-3">
+            <Logo />
+          </div>
           {isError && <Alert variant="danger">{errorMessage}</Alert>}
           <Form>
             <Form.Group className="mb-3">
@@ -76,6 +80,7 @@ const Login = () => {
                 placeholder="Enter username"
                 name="username"
                 onChange={handleChange}
+                className="p-3 shadow-none border-2 fs-5"
                 value={credentials.username}
               />
             </Form.Group>
@@ -87,14 +92,25 @@ const Login = () => {
                 placeholder="Password"
                 name="password"
                 onChange={handleChange}
+                className="p-3 shadow-none border-2 fs-5"
                 value={credentials.password}
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button
+              className="w-100 p-3 fs-5"
+              variant="primary"
+              type="submit"
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
               {isLoading ? <Spinner size="sm" /> : "Log In"}
             </Button>
           </Form>
+
+          <div className="d-flex mt-3">
+            <Link to="/signup">Don't have an account?</Link>
+          </div>
         </Col>
       </Row>
     </Container>

@@ -4,7 +4,7 @@ const Note = require("../models/note.model");
 // getall notes
 const getAllNotes = async (req, res) => {
   try {
-    const query = { userId: req.user };
+    const query = { userId: req.user._id };
     const notes = await Note.find(query);
 
     res.send(notes);
@@ -61,16 +61,24 @@ const editNote = async (req, res) => {
 // search user
 const searchNotes = async (req, res) => {
   try {
-    const query = {
-      $or: [
-        {
-          name: { $regex: req.query.search, $options: "i" },
-        },
-        {
-          description: { $regex: req.query.search, $options: "i" },
-        },
-      ],
-    };
+    const query = req.query.search
+      ? {
+          $or: [
+            {
+              name: { $regex: req.query.search, $options: "i" },
+            },
+            {
+              description: { $regex: req.query.search, $options: "i" },
+            },
+          ],
+
+          $and: [
+            {
+              userId: req.user._id,
+            },
+          ],
+        }
+      : { userId: req.user._id };
     const notes = await Note.find(query);
     res.send(notes);
   } catch (error) {

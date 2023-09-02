@@ -6,6 +6,8 @@ import { BASE_URL, titleCase } from "../config/config";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
 import axios from "axios";
+import Logo from "./Logo";
+import { IoSearchOutline } from "react-icons/io5";
 
 const Header = () => {
   const { user, setUser, setNotes } = NoteState();
@@ -22,9 +24,6 @@ const Header = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!search) {
-      return;
-    }
     setIsLoading(true);
     const { token } = JSON.parse(localStorage.getItem("keeps-token"));
     const options = {
@@ -51,17 +50,17 @@ const Header = () => {
     >
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="fw-bold  d-none d-sm-block">
-          Keeps
+          <Logo />
         </Navbar.Brand>
         <Navbar.Brand as={Link} to="/" className="fw-bold d-block d-sm-none">
-          {titleCase(user?.name)}
+          <Logo text={titleCase(user?.name)} />
         </Navbar.Brand>
-        <Navbar.Toggle className="shadow-none" />
+        <Navbar.Toggle className="shadow-none border-0 p-0 fs-6" />
         {user ? (
           <>
             <Navbar.Collapse id="navbarScroll">
               <Nav
-                className="me-auto my-2 my-lg-0"
+                className="me-3 my-2 my-lg-0"
                 style={{ maxHeight: "100px" }}
                 navbarScroll
               >
@@ -69,17 +68,24 @@ const Header = () => {
                   Signed in as: <b>{titleCase(user?.name)}</b>
                 </Navbar.Text>
               </Nav>
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                <Button variant="success" onClick={handleSubmit}>
-                  {isLoading ? <Spinner size="sm" /> : "Search"}
-                </Button>
+              <Form>
+                <div className="d-flex align-items-center bg-white border border-2 overflow-hidden rounded-pill">
+                  <IoSearchOutline className="bg-white fs-3 mx-3" />
+                  <Form.Control
+                    type="search"
+                    placeholder="Find your notes"
+                    className=" border-0 bg-white shadow-none m-0 p-0"
+                    aria-label="Search"
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <Button
+                    variant="success"
+                    className="rounded-0"
+                    onClick={handleSubmit}
+                  >
+                    {isLoading ? <Spinner size="sm" /> : "Find"}
+                  </Button>
+                </div>
               </Form>
             </Navbar.Collapse>
 
