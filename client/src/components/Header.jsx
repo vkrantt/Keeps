@@ -61,7 +61,7 @@ const Header = () => {
     <Navbar
       expand="lg"
       expanded={expanded}
-      className="bg-body-tertiary position-sticky top-0 shadow"
+      className="bg-body-tertiary position-sticky top-0 shadow-xs"
       style={{ zIndex: 10 }}
     >
       <Container fluid>

@@ -11,3 +11,12 @@ a {
   text-decoration: none !important;
   font-weight: 600;
 }
+
+.shadow-xs {
+  box-shadow: 0 0 4px #999 !important;
+}
+
+.modal.fade.show {
+  backdrop-filter: blur(3px) !important;
+  background: #f0f0f017 !important;
+}

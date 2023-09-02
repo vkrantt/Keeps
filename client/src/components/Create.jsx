@@ -14,7 +14,7 @@ import { NoteState } from "../context/NoteProvider";
 import axios from "axios";
 import { BASE_URL, handleError } from "../config/config";
 
-const Create = ({ showFullForm, isShowForm, editNote, setModalShow }) => {
+const Create = ({ isShowForm, editNote, setModalShow }) => {
   const [showForm, setShowForm] = useState(false);
   const { user, notes, setNotes } = NoteState();
   const [note, setNote] = useState({
@@ -96,7 +96,7 @@ const Create = ({ showFullForm, isShowForm, editNote, setModalShow }) => {
           className={`${editNote ? "p-0 m-0" : "m-auto mt-4"}`}
         >
           {isError && <Alert variant="danger">{message}</Alert>}
-          <Form className="p-2 border border-2 rounded-3 shadow bg-light">
+          <Form className="p-2 rounded-3 shadow-xs bg-light">
             <Form.Group>
               <Form.Control
                 type="text"
