@@ -56,7 +56,7 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/" className="fw-bold d-block d-sm-none">
           {titleCase(user?.name)}
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" className="shadow-none" />
+        <Navbar.Toggle className="shadow-none" />
         {user ? (
           <>
             <Navbar.Collapse id="navbarScroll">
