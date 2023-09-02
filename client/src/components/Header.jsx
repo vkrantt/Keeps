@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Form, Nav, Navbar, Button, Spinner } from "react-bootstrap";
 import { NoteState } from "../context/NoteProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL, titleCase } from "../config/config";
 import { FiLogOut } from "react-icons/fi";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import Logo from "./Logo";
 import { IoSearchOutline } from "react-icons/io5";
 
 const Header = () => {
+  const { pathname } = useLocation();
   const { user, setUser, setNotes } = NoteState();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
@@ -18,6 +19,7 @@ const Header = () => {
   const handleLogout = () => {
     setUser(null);
     setNotes([]);
+    setExpanded(false);
     localStorage.removeItem("keeps-token");
     navigate("/login");
   };
@@ -38,13 +40,27 @@ const Header = () => {
       );
       setIsLoading(false);
       setNotes(data);
+      setExpanded(false);
     } catch (error) {
       setIsLoading(false);
+      setExpanded(false);
     }
   };
+
+  const [expanded, setExpanded] = useState(false);
+
+  const navToggle = () => {
+    setExpanded(expanded ? false : true);
+  };
+
+  const closeNav = () => {
+    setExpanded(false);
+  };
+
   return (
     <Navbar
       expand="lg"
+      expanded={expanded}
       className="bg-body-tertiary position-sticky top-0 shadow"
       style={{ zIndex: 10 }}
     >
@@ -55,7 +71,10 @@ const Header = () => {
         <Navbar.Brand as={Link} to="/" className="fw-bold d-block d-sm-none">
           <Logo text={titleCase(user?.name)} />
         </Navbar.Brand>
-        <Navbar.Toggle className="shadow-none border-0 p-0 fs-6" />
+        <Navbar.Toggle
+          className="shadow-none border-0 p-0 fs-6"
+          onClick={navToggle}
+        />
         {user ? (
           <>
             <Navbar.Collapse id="navbarScroll">
@@ -108,10 +127,28 @@ const Header = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Nav.Link as={Link} to="/login">
+              <Nav.Link
+                as={Link}
+                to="/login"
+                onClick={closeNav}
+                className={`${
+                  pathname === "/login"
+                    ? "active  border-bottom border-3 border-primary"
+                    : ""
+                }`}
+              >
                 Login
               </Nav.Link>
-              <Nav.Link as={Link} to="/signup">
+              <Nav.Link
+                as={Link}
+                to="/signup"
+                onClick={closeNav}
+                className={`${
+                  pathname === "/signup"
+                    ? "active  border-bottom border-3 border-primary"
+                    : ""
+                }`}
+              >
                 Signup
               </Nav.Link>
             </Nav>

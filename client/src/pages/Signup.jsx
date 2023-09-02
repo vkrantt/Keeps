@@ -14,6 +14,8 @@ import { BASE_URL, handleError } from "../config/config";
 import { Link, useNavigate } from "react-router-dom";
 import { NoteState } from "../context/NoteProvider";
 import Logo from "../components/Logo";
+import { FcCheckmark } from "react-icons/fc";
+import { IoCloseSharp } from "react-icons/io5";
 
 const Signup = () => {
   const { setUser } = NoteState();
@@ -27,11 +29,55 @@ const Signup = () => {
     password: "",
   });
 
+  const [lowerCheck, setLowerCheck] = useState(false);
+  const [upperCheck, setupperCheck] = useState(false);
+  const [numberCheck, setNumberCheck] = useState(false);
+  const [spacialCheck, setspacialCheck] = useState(false);
+  const [lengthCheck, setLengthCheck] = useState(false);
+
+  const lower = new RegExp("(?=.*[a-z])");
+  const upper = new RegExp("(?=.*[A-Z])");
+  const number = new RegExp("(?=.*[0-9])");
+  const spacial = new RegExp("(?=.*[!@#$%^&*])");
+  const length = new RegExp("(?=.{8,})");
+
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
     });
+
+    if (e.target.name === "password") {
+      if (e.target.value.match(lower)) {
+        setLowerCheck(true);
+      } else {
+        setLowerCheck(false);
+      }
+
+      if (e.target.value.match(upper)) {
+        setupperCheck(true);
+      } else {
+        setupperCheck(false);
+      }
+
+      if (e.target.value.match(number)) {
+        setNumberCheck(true);
+      } else {
+        setNumberCheck(false);
+      }
+
+      if (e.target.value.match(spacial)) {
+        setspacialCheck(true);
+      } else {
+        setspacialCheck(false);
+      }
+
+      if (e.target.value.match(length)) {
+        setLengthCheck(true);
+      } else {
+        setLengthCheck(false);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -112,7 +158,16 @@ const Signup = () => {
               variant="primary"
               type="submit"
               onClick={handleSubmit}
-              disabled={isLoading}
+              disabled={
+                (isLoading && !credentials.name) ||
+                !credentials.username ||
+                !credentials.password ||
+                !lowerCheck ||
+                !upperCheck ||
+                !numberCheck ||
+                !spacialCheck ||
+                !lengthCheck
+              }
               className="w-100 p-3 fs-5"
             >
               {isLoading ? <Spinner size="sm" /> : "Sign Up"}
@@ -121,6 +176,31 @@ const Signup = () => {
           <div className="d-flex mt-3 ">
             <Link to="/login">Already have an account?</Link>
           </div>
+        </Col>
+      </Row>
+
+      <Row className="mt-3 mb-5">
+        <Col lg="4" className="m-auto pt-3 shadow-sm rounded-2 bg-light">
+          <p>
+            {lowerCheck ? <FcCheckmark /> : <IoCloseSharp />}
+            <span className="mx-2">At least one lowercase character</span>
+          </p>
+          <p>
+            {upperCheck ? <FcCheckmark /> : <IoCloseSharp />}
+            <span className="mx-2">At least one uppercase character</span>
+          </p>
+          <p>
+            {numberCheck ? <FcCheckmark /> : <IoCloseSharp />}
+            <span className="mx-2">At least one number </span>
+          </p>
+          <p>
+            {spacialCheck ? <FcCheckmark /> : <IoCloseSharp />}
+            <span className="mx-2">At least one spacial character </span>
+          </p>
+          <p>
+            {lengthCheck ? <FcCheckmark /> : <IoCloseSharp />}
+            <span className="mx-2">At least 8 character </span>
+          </p>
         </Col>
       </Row>
     </Container>
