@@ -1,0 +1,6 @@
+.cardd:hover .controller {
+  visibility: visible;
+}
+.controller {
+  visibility: hidden;
+}
