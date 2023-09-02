@@ -69,7 +69,7 @@ const Create = ({ isShowForm, editNote, setModalShow }) => {
         }
       } else {
         setShowForm(false);
-        setNotes([...notes, data]);
+        setNotes([data, ...notes]);
         setNote({
           name: "",
           description: "",

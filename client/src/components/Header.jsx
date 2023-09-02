@@ -114,7 +114,10 @@ const Header = () => {
                 style={{ maxHeight: "100px" }}
                 navbarScroll
               >
-                <Nav.Link onClick={() => handleLogout()}>
+                <Nav.Link
+                  className="fw-bold text-secondary"
+                  onClick={() => handleLogout()}
+                >
                   <FiLogOut /> Logout
                 </Nav.Link>
               </Nav>

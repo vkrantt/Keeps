@@ -5,7 +5,7 @@ const Note = require("../models/note.model");
 const getAllNotes = async (req, res) => {
   try {
     const query = { userId: req.user._id };
-    const notes = await Note.find(query);
+    const notes = await Note.find(query).sort({ _id: -1 });
 
     res.send(notes);
   } catch (error) {

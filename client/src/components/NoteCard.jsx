@@ -72,7 +72,9 @@ const NoteCard = ({ note }) => {
               className="me-2 p-1 px-2"
               onClick={() => setNoteForEdit(note)}
             >
-              <span className="material-symbols-outlined">edit</span>
+              <span className="material-symbols-outlined text-secondary">
+                edit
+              </span>
             </Button>
           </EditModal>
           <Button
@@ -81,7 +83,9 @@ const NoteCard = ({ note }) => {
             className="me-2 p-1 px-2"
             onClick={() => handleDelete(note._id)}
           >
-            <span className="material-symbols-outlined">delete</span>
+            <span className="material-symbols-outlined text-secondary">
+              delete
+            </span>
           </Button>
           <Button
             variant="none"
@@ -89,7 +93,7 @@ const NoteCard = ({ note }) => {
             className="me-2 p-1 px-2"
             onClick={() => handlePinned(note._id)}
           >
-            <TbPinned className="fs-4 mb-1" />
+            <TbPinned className="text-secondary" style={{ fontSize: "27px" }} />
           </Button>
         </div>
       </Card.Body>
